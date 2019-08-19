@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.Game-layout {
+  height: -webkit-fill-available;
+  width: 100vh;
+  margin: 0 auto;
+
+  .btn {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 200;
+    color: #fff;
+    cursor: pointer;
+    height: 55px;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    background-size: 300% 100%;
+    background-image: linear-gradient(
+      to right,
+      #6253e1,
+      #852d91,
+      #a3a1ff,
+      #fbc2eb
+    );
+    box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+    margin: 10%;
+    text-align: center;
+    &:hover {
+      background-position: 100% 0;
+      moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      -webkit-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+  }
+
+  .alphabet {
+    display: -webkit-box;
+    max-width: 800px;
+    &--letter {
+      background: linear-gradient(
+        to right,
+        #fbc2eb 0%,
+        #a6c1ee 51%,
+        #fbc2eb 100%
+      );
+      border: none;
+      font-family: 'Roboto', sans-serif;
+      margin: 10px;
+      padding: 30px;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: larger;
+      font-weight: 200;
+      transition: 0.5s;
+      background-size: 200% auto;
+      color: #852d91;
+      box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    &--letter:hover {
+      color: #ffff;
+      background-position: right center;
+    }
+    &--letter:disabled {
+      background: #808080;
+      color: #e1e1e1;
+    }
+  }
+}
