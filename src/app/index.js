@@ -52,10 +52,11 @@ class App extends React.Component {
     selectedWord: words[randomIndex()],
     guesedLetters: [],
     lives: 5,
+    showHint: false,
   };
 
   checkLetter = letter => {
-    const { selectedWord, lives, guesedLetters } = this.state;
+    const { selectedWord, lives } = this.state;
     if (!selectedWord.word.toUpperCase().includes(letter)) {
       this.setState({
         lives: lives - 1,
@@ -64,14 +65,12 @@ class App extends React.Component {
   };
 
   render() {
-    const { lives, guesedLetters, selectedWord } = this.state;
-
-    const hint = selectedWord.hint;
-    const selectedLett = selectedWord.word
+    const { showHint, lives, guesedLetters, selectedWord } = this.state;
+    const thisWord = selectedWord.word
       .toUpperCase()
       .split('')
       .map(letter => letter);
-    // console.log(selectedLett);
+
     if (lives === 0) {
       return <h1>You lose</h1>;
     }
@@ -82,7 +81,7 @@ class App extends React.Component {
     ) {
       return <h1>You win</h1>;
     }
-    console.log(selectedLett);
+    console.log(thisWord);
     return (
       <div className="Game-layout">
         <button
@@ -95,10 +94,15 @@ class App extends React.Component {
           Restart
         </button>
 
-        <button className="btn" type="button" onClick={() => {}}>
+        <button
+          className="btn"
+          type="button"
+          onClick={() => this.setState({ showHint: true })}
+        >
           Hint
         </button>
 
+        {showHint && <p>{selectedWord.hint}</p>}
         <div>
           {selectedWord.word.split('').map((letter, i) => (
             <span key={i}>
