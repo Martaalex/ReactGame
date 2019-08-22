@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.scss';
 import { Redirect } from 'react-router-dom';
 import { ROUTES } from '../../../constants';
@@ -49,98 +49,76 @@ const words = [
 
 const randomIndex = () => Math.floor(Math.random() * words.length + 0);
 
-class GamePage extends React.Component {
-  state = {
-    selectedWord: words[randomIndex()],
-    guesedLetters: [],
-    lives: 5,
-    showHint: false,
-  };
+function GamePage() {
+  const [selectedWord, setSelectedWord] = useState(words[randomIndex()]);
+  const [guesedLetters, setGuesedLetters] = useState([]);
+  const [lives, setLives] = useState(5);
+  const [showHint, setShowHint] = useState(false);
 
-  checkLetter = letter => {
-    const { selectedWord, lives } = this.state;
+  const checkLetter = letter => {
+    setGuesedLetters([...guesedLetters, letter]);
     if (!selectedWord.word.toUpperCase().includes(letter)) {
-      this.setState({
-        lives: lives - 1,
-      });
+      setLives(lives - 1);
     }
   };
 
-  render() {
-    const { showHint, lives, guesedLetters, selectedWord } = this.state;
-    const thisWord = selectedWord.word
-      .toUpperCase()
-      .split('')
-      .map(letter => letter);
-
-    if (lives === 0) {
-      return <Redirect to={ROUTES.gameOver} />;
-    }
-    if (
-      selectedWord.word
-        .split('')
-        .every(letter => guesedLetters.includes(letter.toUpperCase()))
-    ) {
-      return <Redirect to={ROUTES.gameWin} />;
-    }
-    console.log(thisWord);
-    return (
-      <div className="Game-layout">
-        <button
-          className="btn"
-          type="button"
-          onClick={() => {
-            console.log('restart');
-          }}
-        >
-          Restart
-        </button>
-
-        <button
-          className="btn"
-          type="button"
-          onClick={() => this.setState({ showHint: true })}
-        >
-          Hint
-        </button>
-
-        {showHint && <p>{selectedWord.hint}</p>}
-        <div>
-          {selectedWord.word.split('').map((letter, i) => (
-            <span key={i}>
-              {guesedLetters.includes(letter.toUpperCase()) ? letter : '*'}
-            </span>
-          ))}
-        </div>
-        <h1>
-          Tu turi
-          {lives}
-          bandymus
-        </h1>
-
-        <div className="alphabet">
-          {ALPHABET.map((letter, i) => (
-            <button
-              type="button"
-              disabled={guesedLetters.includes(letter)}
-              onClick={() =>
-                this.setState(
-                  {
-                    guesedLetters: [...guesedLetters, letter],
-                  },
-                  () => this.checkLetter(letter)
-                )
-              }
-              className="alphabet--letter"
-              key={i}
-            >
-              {letter}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
+  if (lives === 0) {
+    return <Redirect to={ROUTES.gameOver} />;
   }
+  if (
+    selectedWord.word
+      .split('')
+      .every(letter => guesedLetters.includes(letter.toUpperCase()))
+  ) {
+    return <Redirect to={ROUTES.gameWin} />;
+  }
+
+  const onReset = () => {
+    setSelectedWord(words[randomIndex()]);
+    setLives(5);
+    setGuesedLetters([]);
+    setShowHint(false);
+  };
+
+  return (
+    <div className="Game-layout">
+      <button className="btn" type="button" onClick={onReset}>
+        Restart
+      </button>
+
+      <button className="btn" type="button" onClick={() => setShowHint(true)}>
+        Hint
+      </button>
+
+      {showHint && <p>{selectedWord.hint}</p>}
+      <div>
+        {selectedWord.word.split('').map((letter, i) => (
+          <span key={i}>
+            {guesedLetters.includes(letter.toUpperCase()) ? letter : '*'}
+          </span>
+        ))}
+      </div>
+      <h1>
+        Tu turi
+        {lives}
+        bandymus
+      </h1>
+
+      <div className="alphabet">
+        {ALPHABET.map((letter, i) => (
+          <button
+            type="button"
+            disabled={guesedLetters.includes(letter)}
+            onClick={() => checkLetter(letter)}
+            className="alphabet--letter"
+            key={i}
+          >
+            {letter}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default GamePage;

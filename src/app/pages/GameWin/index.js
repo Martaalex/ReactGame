@@ -6,7 +6,7 @@ function GameWin() {
   return (
     <div className="GameWin">
       <h1>Congratulations You Win!</h1>
-      <Link to={`/game`}>Restart</Link>
+      <Link to={`/`}>Restart</Link>
     </div>
   );
 }
