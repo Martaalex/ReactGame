@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './index.scss';
 import { Redirect } from 'react-router-dom';
 import { ROUTES } from '../../../constants';
+import Button from '../../components/Button';
 
 const ALPHABET = [
   'A',
@@ -49,7 +50,7 @@ const words = [
 
 const randomIndex = () => Math.floor(Math.random() * words.length + 0);
 
-function GamePage() {
+function GamePage({ history }) {
   const [selectedWord, setSelectedWord] = useState(words[randomIndex()]);
   const [guesedLetters, setGuesedLetters] = useState([]);
   const [lives, setLives] = useState(5);
@@ -63,14 +64,22 @@ function GamePage() {
   };
 
   if (lives === 0) {
-    return <Redirect to={ROUTES.gameOver} />;
+    setTimeout(() => {
+      history.replace(ROUTES.gameOver, {
+        word: selectedWord.word || 'oiuyytruu',
+      });
+    }, 700);
+    // return <Redirect to={ROUTES.gameOver} />;
   }
   if (
     selectedWord.word
       .split('')
       .every(letter => guesedLetters.includes(letter.toUpperCase()))
   ) {
-    return <Redirect to={ROUTES.gameWin} />;
+    setTimeout(() => {
+      history.replace(ROUTES.gameWin);
+    }, 700);
+    // return <Redirect to={ROUTES.gameWin} />;
   }
 
   const onReset = () => {
@@ -82,39 +91,41 @@ function GamePage() {
 
   return (
     <div className="Game-layout">
-      <button className="btn" type="button" onClick={onReset}>
-        Restart
-      </button>
+      <div className="Game-layout--buttons">
+        <Button isPurple onClick={onReset}>
+          Restart
+        </Button>
 
-      <button className="btn" type="button" onClick={() => setShowHint(true)}>
-        Hint
-      </button>
-
+        <div className="score">
+          {[...Array(lives)].map(() => (
+            <span role="img" aria-label="heart ilustration">
+              ❤️
+            </span>
+          ))}
+        </div>
+        <Button isPurple onClick={() => setShowHint(true)}>
+          Hint
+        </Button>
+      </div>
       {showHint && <p>{selectedWord.hint}</p>}
-      <div>
+      <div className="gameScreen">
         {selectedWord.word.split('').map((letter, i) => (
           <span key={i}>
             {guesedLetters.includes(letter.toUpperCase()) ? letter : '*'}
           </span>
         ))}
       </div>
-      <h1>
-        Tu turi
-        {lives}
-        bandymus
-      </h1>
 
       <div className="alphabet">
         {ALPHABET.map((letter, i) => (
-          <button
-            type="button"
+          <Button
             disabled={guesedLetters.includes(letter)}
             onClick={() => checkLetter(letter)}
-            className="alphabet--letter"
+            isSquare
             key={i}
           >
             {letter}
-          </button>
+          </Button>
         ))}
       </div>
     </div>

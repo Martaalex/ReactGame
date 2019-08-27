@@ -1,0 +1,43 @@
+.Button {
+  width: 74px;
+  background: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  margin: 10px;
+  padding: 15px 30px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: larger;
+  font-weight: 200;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: #852d91;
+  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+  border-radius: 10px;
+  cursor: pointer;
+
+  &--purple {
+    width: 203px;
+    background-image: linear-gradient(
+      to right,
+      #6253e1,
+      #852d91,
+      #a3a1ff,
+      #fbc2eb
+    );
+    color: #e1e1e1;
+  }
+
+  &--square {
+    padding: 30px;
+  }
+
+  &:hover {
+    color: #ffff;
+    background-position: right center;
+  }
+  &:disabled {
+    background: #808080;
+    color: #e1e1e1;
+  }
+}
