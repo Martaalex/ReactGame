@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './index.scss';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { ROUTES } from '../../../constants';
 import Button from '../../components/Button';
+import Footer from '../../components/Footer';
 
 const ALPHABET = [
   'A',
@@ -66,7 +67,7 @@ function GamePage({ history }) {
   if (lives === 0) {
     setTimeout(() => {
       history.replace(ROUTES.gameOver, {
-        word: selectedWord.word || 'oiuyytruu',
+        word: selectedWord.word || ' ',
       });
     }, 700);
     // return <Redirect to={ROUTES.gameOver} />;
@@ -90,44 +91,49 @@ function GamePage({ history }) {
   };
 
   return (
-    <div className="Game-layout">
-      <div className="Game-layout--buttons">
-        <Button isPurple onClick={onReset}>
-          Restart
-        </Button>
+    <div className="Gamebackground">
+      <div className="Game-layout">
+        <div className="Game-layout--buttons">
+          <Button isPurple onClick={onReset}>
+            Restart
+          </Button>
 
-        <div className="score">
-          {[...Array(lives)].map(() => (
-            <span role="img" aria-label="heart ilustration">
-              ❤️
+          <div className="score">
+            {[...Array(lives)].map((val, index) => (
+              <span key={index} role="img" aria-label="heart ilustration">
+                ❤️
+              </span>
+            ))}
+          </div>
+          {
+            <Button isPurple onClick={() => setShowHint(true)}>
+              Hint
+            </Button>
+          }
+        </div>
+        {showHint && <div className="hintBox">{selectedWord.hint}</div>}
+        <div className="gameScreen">
+          {selectedWord.word.split('').map((letter, i) => (
+            <span key={i}>
+              {guesedLetters.includes(letter.toUpperCase()) ? letter : '*'}
             </span>
           ))}
         </div>
-        <Button isPurple onClick={() => setShowHint(true)}>
-          Hint
-        </Button>
-      </div>
-      {showHint && <p>{selectedWord.hint}</p>}
-      <div className="gameScreen">
-        {selectedWord.word.split('').map((letter, i) => (
-          <span key={i}>
-            {guesedLetters.includes(letter.toUpperCase()) ? letter : '*'}
-          </span>
-        ))}
-      </div>
 
-      <div className="alphabet">
-        {ALPHABET.map((letter, i) => (
-          <Button
-            disabled={guesedLetters.includes(letter)}
-            onClick={() => checkLetter(letter)}
-            isSquare
-            key={i}
-          >
-            {letter}
-          </Button>
-        ))}
+        <div className="alphabet">
+          {ALPHABET.map((letter, i) => (
+            <Button
+              disabled={guesedLetters.includes(letter) || !lives}
+              onClick={() => checkLetter(letter)}
+              isSquare
+              key={i}
+            >
+              {letter}
+            </Button>
+          ))}
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -1,10 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 .GameOver {
-  line-height: 23rem;
+  line-height: 15rem;
   height: 100vh;
   text-align: center;
+  font-family: Roboto;
+  h1 {
+    font-size: 30px;
+  }
 
   .box {
     display: block;
     vertical-align: middle;
+
+    p {
+      text-align: center;
+      padding: 5px;
+    }
   }
 }

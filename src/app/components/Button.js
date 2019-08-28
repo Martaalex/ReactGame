@@ -8,11 +8,11 @@ const Button = ({
   children,
   isPurple,
   isSquare,
-  key,
+  i,
 }) => {
   return (
     <button
-      key={key}
+      key={i}
       type="button"
       disabled={disabled}
       onClick={onClick}

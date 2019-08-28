@@ -15,7 +15,8 @@ function GameOver({ location }) {
     <div className="GameOver">
       <div className="box">
         <h1>Game Over</h1>
-        <p>{word}</p>
+
+        <p>Žodis būvo : {word}</p>
         <Link to={`/`}>
           <Button isPurple>Restart</Button>
         </Link>

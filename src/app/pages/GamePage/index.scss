@@ -2,36 +2,53 @@
 @import url('https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Londrina+Outline&display=swap');
 
-.Game-layout {
-  width: 100vh;
-  margin: 0 auto;
-  padding: 5%;
-  &--buttons {
-    display: flex;
-    justify-content: space-between;
+.Gamebackground {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.7)
+    ),
+    url(../../../static/abstract-2468874_1280.jpg);
+  height: -webkit-fill-available;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .Game-layout {
+    width: 100vh;
+    margin: 0 auto;
+    padding: 15px;
 
-    .score {
-      padding: 30px;
-      font-family: 'Londrina Outline', cursive;
-      font-size: 30px;
+    .hintBox {
+      font-family: roboto;
+      text-align: center;
+      padding: 5px;
     }
-  }
-  .gameScreen {
-    height: auto;
-    min-width: 400px;
-    border: dotted;
-    text-align: center;
-    padding: 60px;
 
-    span {
-      padding: 10px 10px;
-      font-family: 'Fredericka the Great', cursive;
-      font-size: 30px;
+    &--buttons {
+      display: flex;
+      justify-content: space-between;
+
+      .score {
+        padding: 30px;
+        font-size: 30px;
+      }
     }
-  }
+    .gameScreen {
+      height: auto;
+      min-width: 400px;
+      border: dotted;
+      text-align: center;
+      padding: 60px;
+      background: rgba(255, 255, 255, 0.71);
 
-  .alphabet {
-    display: -webkit-box;
-    max-width: 800px;
+      span {
+        padding: 10px 10px;
+        font-family: 'Fredericka the Great', cursive;
+        font-size: 30px;
+      }
+    }
+
+    .alphabet {
+      display: -webkit-box;
+      max-width: 800px;
+    }
   }
 }
